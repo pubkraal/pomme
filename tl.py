@@ -17,6 +17,7 @@ terminate = False
 
 urls = []
 
+
 def main():
     global server
     global c
@@ -31,11 +32,13 @@ def main():
         time.sleep(0.2)
     server.close()
 
+
 def _handle_privmsg(conn, event):
     print timestamp(), "privmsg", event._arguments
     global terminate
     if event._arguments[0].lower() == "jorik ga weg":
         terminate = True
+
 
 def _handle_pubmsg(conn, event):
     global server
@@ -65,12 +68,15 @@ def _handle_pubmsg(conn, event):
         for url in urls[:5]:
             server.privmsg("#tl.nl", url)
 
+
 def _handle_umode(conn, event):
     if event.arguments()[0] == '+i':
         server.join("#tl.nl")
 
+
 def timestamp():
     return datetime.datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
+
 
 def getTitleFromURL(url):
     retval = ''
@@ -86,4 +92,3 @@ def getTitleFromURL(url):
 
 if __name__ == "__main__":
     main()
-
