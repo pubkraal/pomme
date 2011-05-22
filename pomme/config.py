@@ -1,6 +1,7 @@
 import os
 from ConfigParser import ConfigParser
 
+
 class Config(object):
     def __init__(self, extra):
         self.cfg = ConfigParser()
@@ -27,6 +28,7 @@ class Config(object):
 
     def get(self, section, name, default=None):
         return getattr(self.cfg, name, default)
+
 
 class ServerConfig(object):
     def __init__(self, hostname, nicknames, port=6667, ssl=False,

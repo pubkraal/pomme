@@ -3,6 +3,7 @@ import argparse
 import modules
 from pomme import pomme, config
 
+
 def main():
     parser = argparse.ArgumentParser(description='pomme irc bot')
     parser.add_argument('-c', '--config', dest="extraconfig", default="",
@@ -20,6 +21,7 @@ def main():
         print "Caught interrupt"
         bot.close()
     print "Exit"
+
 
 if __name__ == "__main__":
     main()
