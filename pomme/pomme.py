@@ -1,5 +1,4 @@
 import irclib
-irclib.DEBUG = True
 
 
 class Pomme(object):
@@ -35,10 +34,14 @@ class Pomme(object):
     def close(self):
         for server in self.servers:
             if server.is_connected():
-                    server.disconnect("Doei!")
+                server.disconnect("Doei!")
 
     def reload(self):
-        self.mods = reload(self.mods)
+        try:
+            print "Reloading!!"
+            self.mods = reload(self.mods)
+        except Exception as e:
+            print "Couldn't reload modules:", e
 
     def connect(self, hostname, port, nickname):
         return self.connection.connect(hostname, port, nickname)
@@ -49,11 +52,15 @@ class Pomme(object):
             self.terminate = True
         elif msg == "rehash":
             self.reload()
+        elif msg[:4] == "join":
+            connection.join(msg[5:])
 
     def handle_pubmsg(self, connection, event):
-        msg = event._arguments[0].strip()
-        if msg[:3].lower() == 'pom':
-            connection.privmsg(event.target(), "pom")
+        for x in self.mods.hooks.get('pubmsg'):
+            try:
+                x.pubmsg(connection, event)
+            except Exception as e:
+                print "OHGOD :psyduck:,", e
 
     def handle_umode(self, connection, event):
         if event.arguments()[0] == "+i":
