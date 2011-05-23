@@ -1,11 +1,11 @@
-from . import cookie
-from . import control
-from . import pom
-from . import urls
-from . import textfun
-from . import log
+import cookie
+import control
+import pom
+import urls
+import textfun
+import log
 
-all = ['cookie', 'urls', 'pom', 'control', 'textfun', 'lol']
+all = ['cookie', 'urls', 'pom', 'control', 'textfun', 'log']
 
 hooks = {'privmsg': [], 'pubmsg': []}
 
@@ -15,4 +15,9 @@ hooks['pubmsg'].append(textfun)
 hooks['pubmsg'].append(log)
 
 hooks['privmsg'].append(control)
+
+for mod in all:
+    modname = '.'.join(['modules', mod])
+    if modname in sys.modules:
+        sys.modules[modname] = reload(sys.modules[modname])
 

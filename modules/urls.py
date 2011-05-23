@@ -15,8 +15,6 @@ def pubmsg(connection, event):
     urlpattern = 'http(s)?://([^\s])+'
     urlmatch = re.search(urlpattern, message)
 
-    print message, ">>", urlmatch
-
     if urlmatch:
         try:
             while len(URLCACHE) >= 5:

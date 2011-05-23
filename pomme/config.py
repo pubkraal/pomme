@@ -17,8 +17,8 @@ class Config(object):
                 items = dict(self.cfg.items(section))
                 s = ServerConfig(items.get('host'),
                         [items.get('nick'), items.get('nick2')],
-                        items.get('port', 6667),
-                        items.get('ssl', False),
+                        int(items.get('port', 6667)),
+                        bool(items.get('ssl', 'False').lower() == 'true'),
                         items.get('password', ''),
                         items.get('channels', '').split(','))
                 self.servers.append(s)

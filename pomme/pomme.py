@@ -15,7 +15,8 @@ class Pomme(object):
                 s = self.irc.server()
                 s.join_channels = server.channels
                 c = s.connect(server.hostname, server.port,
-                        server.nicknames[0])
+                        server.nicknames[0], ssl=server.ssl,
+                        password=server.password)
                 c.add_global_handler("privmsg", self.handle_privmsg)
                 c.add_global_handler("pubmsg", self.handle_pubmsg)
                 c.add_global_handler("umode", self.handle_umode)
@@ -38,7 +39,7 @@ class Pomme(object):
 
     def reload(self):
         try:
-            print "Reloading!!"
+            print "Reloading modules"
             self.mods = reload(self.mods)
         except Exception as e:
             print "Couldn't reload modules:", e
