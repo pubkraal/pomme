@@ -17,8 +17,7 @@ def pubmsg(connection, event):
 
     if urlmatch:
         try:
-            while len(URLCACHE) >= 5:
-                urls.pop(0)
+            URLCACHE = URLCACHE[-4:]
             URLCACHE.append(urlmatch.group())
             title = get_title_from_URL(urlmatch.group())
             if title:
@@ -43,3 +42,4 @@ def get_title_from_URL(url):
         traceback.print_exc()
 
     return retval
+
