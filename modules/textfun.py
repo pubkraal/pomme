@@ -9,8 +9,11 @@ def pubmsg(connection, event):
         for idx, letter in enumerate(words):
             nwords += letter.upper() if not idx % 2 else letter.lower()
         connection.privmsg(event.target(), nwords)
+
     elif message.lower() == 'hallo pomme':
         user = event.source().split('!')[0]
-        if user.lower() in ('gx', 'gx`', 'gauntlet'):
-            connection.privmsg(event.target(), "Hai! <3")
+        connection.privmsg(event.target(), "Hai! <3")
 
+    elif 'vakansie' in message.lower():
+        connection.privmsg(event.target(), 'Ik kan ook wel verkansie '
+            'gebruiken naah!')

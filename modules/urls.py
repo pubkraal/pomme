@@ -9,6 +9,7 @@ URLCACHE = []
 
 
 def pubmsg(connection, event):
+    global URLCACHE
     message = event._arguments[0].strip()
     command = message.split()[0].lower()
 
