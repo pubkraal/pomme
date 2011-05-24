@@ -1,2 +1,3 @@
 def pubmsg(connection, event):
-    print "[%s] %r" % (event.target(), event._arguments)
+    username = event.source().split('!')[0]
+    print "[%s:%s] %r" % (event.target(), username, event._arguments)

@@ -46,7 +46,7 @@ class Pomme(object):
 
     def reload(self):
         try:
-            print "Reloading!!"
+            print "Reloading modules"
             self.mods = reload(self.mods)
         except Exception as e:
             print "Couldn't reload modules:", e
