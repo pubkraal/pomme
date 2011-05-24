@@ -1,5 +1,6 @@
 import irclib
 
+irclib.DEBUG = True
 
 class Pomme(object):
     def __init__(self, configuration, modules):
@@ -15,12 +16,19 @@ class Pomme(object):
                 s = self.irc.server()
                 s.join_channels = server.channels
                 c = s.connect(server.hostname, server.port,
-                        server.nicknames[0])
+                        server.nicknames[0], ssl=server.ssl,
+                        password=server.password)
                 c.add_global_handler("privmsg", self.handle_privmsg)
                 c.add_global_handler("pubmsg", self.handle_pubmsg)
                 c.add_global_handler("umode", self.handle_umode)
 
                 self.servers.append(s)
+
+                for channel in server.channels:
+                    try:
+                        s.join(channel)
+                    except:
+                        print e
 
             except Exception as e:
                 print e
