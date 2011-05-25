@@ -6,6 +6,8 @@ import textfun
 import traceback
 import log
 
+import sys
+
 all = ['cookie', 'urls', 'pom', 'control', 'textfun', 'log']
 
 hooks = {'privmsg': [], 'pubmsg': []}
