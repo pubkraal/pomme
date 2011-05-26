@@ -17,3 +17,10 @@ def pubmsg(connection, event):
     elif 'vakansie' in message.lower():
         connection.privmsg(event.target(), 'Ik kan ook wel verkansie '
             'gebruiken naah!')
+
+    elif 'blabber' in message.lower():
+        connection.privmsg(event.target(), "<3")
+
+    elif message.lower() == 'chicken?':
+        connection.privmsg(event.target(),
+            "http://isotropic.org/papers/chicken.pdf")

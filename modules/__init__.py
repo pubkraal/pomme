@@ -1,5 +1,6 @@
 import cookie
 import control
+import paradise
 import pom
 import urls
 import textfun
@@ -8,14 +9,15 @@ import log
 
 import sys
 
-all = ['cookie', 'urls', 'pom', 'control', 'textfun', 'log']
+all = ['cookie', 'urls', 'pom', 'paradise', 'control', 'textfun', 'log']
 
-hooks = {'privmsg': [], 'pubmsg': []}
+hooks = {'privmsg': [], 'pubmsg': [], 'cycle': []}
 
 hooks['pubmsg'].append(urls)
 hooks['pubmsg'].append(pom)
 hooks['pubmsg'].append(textfun)
 hooks['pubmsg'].append(log)
+hooks['pubmsg'].append(paradise)
 
 hooks['privmsg'].append(control)
 

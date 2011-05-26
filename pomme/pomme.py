@@ -36,6 +36,12 @@ class Pomme(object):
 
         while not self.terminate:
             self.irc.process_once(0.2)
+            for x in self.mods.hooks.get('cycle', []):
+                try:
+                    x.cycle(self.servers)
+                except Exception as e:
+                    print "OHGOD :psyduck:, iets fout in de cycle!"
+                    traceback.print_exc()
 
         self.close()
 

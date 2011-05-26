@@ -18,11 +18,12 @@ def pubmsg(connection, event):
 
     if urlmatch:
         try:
-            URLCACHE = URLCACHE[-4:]
-            URLCACHE.append(urlmatch.group())
-            title = get_title_from_URL(urlmatch.group())
-            if title:
-                connection.privmsg(event.target(), "title: %s" % (title,))
+            if urlmatch.group() not in URLCACHE:
+                URLCACHE = URLCACHE[-4:]
+                URLCACHE.append(urlmatch.group())
+                title = get_title_from_URL(urlmatch.group())
+                if title:
+                    connection.privmsg(event.target(), "title: %s" % (title,))
         except Exception as e:
             traceback.print_exc()
 
