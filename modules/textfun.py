@@ -21,9 +21,6 @@ def pubmsg(connection, event):
         connection.privmsg(event.target(), 'Ik kan ook wel verkansie '
             'gebruiken naah!')
 
-    elif 'blabber' in message.lower():
-        connection.privmsg(event.target(), "<3")
-
     elif message.lower() == 'chicken?':
         connection.privmsg(event.target(),
             "http://isotropic.org/papers/chicken.pdf")
@@ -31,3 +28,9 @@ def pubmsg(connection, event):
     elif 'spaans' in message.lower():
         connection.privmsg(event.target(),
             random.choice(['El pollo diablo!', 'Yo no hablo Español!']))
+
+    # Bot love specifics down here.
+    elif message.lower() == 'hello!':
+        nickname = event.source().split('!')[0]
+        if nickname.lower() == 'blabber':
+            connection.privmsg(event.target(), "Hi %s!" % (nickname,))
