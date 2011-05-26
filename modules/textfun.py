@@ -1,3 +1,6 @@
+# vim: set fileencoding=utf-8 :
+import random
+
 def pubmsg(connection, event):
     message = event._arguments[0].strip()
     command = message.split()[0]
@@ -24,3 +27,7 @@ def pubmsg(connection, event):
     elif message.lower() == 'chicken?':
         connection.privmsg(event.target(),
             "http://isotropic.org/papers/chicken.pdf")
+
+    elif 'spaans' in message.lower():
+        connection.privmsg(event.target(),
+            random.choice(['El pollo diablo!', 'Yo no hablo Español!']))
