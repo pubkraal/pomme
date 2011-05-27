@@ -2,6 +2,7 @@ import irclib
 
 irclib.DEBUG = True
 
+
 class Pomme(object):
     def __init__(self, configuration, modules):
         self.config = configuration

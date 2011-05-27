@@ -44,4 +44,3 @@ def get_title_from_URL(url):
         traceback.print_exc()
 
     return retval
-

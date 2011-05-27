@@ -1,6 +1,7 @@
 # vim: set fileencoding=utf-8 :
 import random
 
+
 def pubmsg(connection, event):
     message = event._arguments[0].strip()
     command = message.split()[0]

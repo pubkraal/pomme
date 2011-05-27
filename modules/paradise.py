@@ -4,6 +4,7 @@ import traceback
 
 URL = "http://www.radioparadise.com/content.php?name=Playlist"
 
+
 def pubmsg(connection, event):
     message = event._arguments[0].strip()
     if message.lower() in ['wat horen we nu?', '!np', '!paradise']:
@@ -20,4 +21,3 @@ def pubmsg(connection, event):
                     (artist, song))
         except:
             traceback.print_exc()
-
