@@ -6,7 +6,7 @@ import time
 import traceback
 try:
     import cPickle as pickle
-except: 
+except:
     import pickle
 
 import lxml.html
