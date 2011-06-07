@@ -30,6 +30,9 @@ def pubmsg(connection, event):
         connection.privmsg(event.target(),
             random.choice(['El pollo diablo!', 'Yo no hablo Español!']))
 
+    elif 'dronten' in message.lower():
+        connection.privmsg(event.target(), "Flevoland :'D")
+
     # Bot love specifics down here.
     elif message.lower() == 'hello!':
         nickname = event.source().split('!')[0]
