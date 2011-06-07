@@ -38,3 +38,6 @@ def pubmsg(connection, event):
         nickname = event.source().split('!')[0]
         if nickname.lower() == 'blabber':
             connection.privmsg(event.target(), "Hi %s!" % (nickname,))
+
+    elif 'blabber' in message.lower():
+        connection.privmsg(event.target(), 'blabberuuu~~ <3~')
