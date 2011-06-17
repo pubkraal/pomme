@@ -17,7 +17,8 @@ def pubmsg(connection, event):
                 song = node.tail or song
 
             if artist and song:
-                connection.privmsg(event.target(), 'Radio Paradise (.com) speelt nu: %s - %s' % \
+                connection.privmsg(event.target(),
+                    'Radio Paradise (.com) speelt nu: %s - %s' % \
                     (artist, song))
         except:
             traceback.print_exc()

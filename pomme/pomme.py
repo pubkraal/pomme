@@ -12,6 +12,9 @@ class Pomme(object):
         self.terminate = False
 
     def run(self):
+        self.irc.add_global_handler("privmsg", self.handle_privmsg)
+        self.irc.add_global_handler("pubmsg", self.handle_pubmsg)
+        self.irc.add_global_handler("umode", self.handle_umode)
         for server in self.config.get_servers():
             try:
                 s = self.irc.server()
@@ -19,9 +22,6 @@ class Pomme(object):
                 c = s.connect(server.hostname, server.port,
                         server.nicknames[0], ssl=server.ssl,
                         password=server.password)
-                c.add_global_handler("privmsg", self.handle_privmsg)
-                c.add_global_handler("pubmsg", self.handle_pubmsg)
-                c.add_global_handler("umode", self.handle_umode)
 
                 self.servers.append(s)
 
