@@ -1,13 +1,21 @@
 # vim: set fileencoding=utf-8 :
 import random
 
+store_ = {}
 
 def pubmsg(connection, event):
+    global store_
     message = event._arguments[0].strip()
     command = message.split()[0]
     words = ' '.join(message.split()[1:])
+
+    msgkey = ';'.join([connection.server, event.target()])
+
     if command == '!reverse':
-        connection.privmsg(event.target(), words[::-1])
+        if words == '_':
+            connection.privmsg(event.target(), store_[msgkey][::-1])
+        else:
+            connection.privmsg(event.target(), words[::-1])
     elif command == '!breezah':
         nwords = ''
         for idx, letter in enumerate(words):
@@ -41,3 +49,6 @@ def pubmsg(connection, event):
 
     elif 'blabber' in message.lower():
         connection.privmsg(event.target(), 'blabberuuu~~ <3~')
+
+    else:
+        store_[msgkey] = message
