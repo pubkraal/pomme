@@ -17,6 +17,8 @@ def pubmsg(connection, event):
         else:
             connection.privmsg(event.target(), words[::-1])
     elif command == '!breezah':
+        if words == '_':
+            words = store_[msgkey]
         nwords = ''
         for idx, letter in enumerate(words):
             nwords += letter.upper() if not idx % 2 else letter.lower()
