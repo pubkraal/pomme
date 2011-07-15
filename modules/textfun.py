@@ -43,6 +43,9 @@ def pubmsg(connection, event):
     elif 'dronten' in message.lower():
         connection.privmsg(event.target(), "Flevoland :'D")
 
+    elif 'ugh.pdf' in message.lower():
+        connection.privmsg(event.target(), "Fuck UNIX.")
+
     # Bot love specifics down here.
     elif message.lower() == 'hello!':
         nickname = event.source().split('!')[0]
