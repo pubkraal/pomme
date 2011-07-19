@@ -33,7 +33,7 @@ def pubmsg(connection, event):
     if urlmatch:
         try:
             if urlmatch.group() not in URLCACHE:
-                URLCACHE[uid] = URLCACHE[uid][-4:]
+                URLCACHE[uid] = URLCACHE[uid][-50:]
                 URLCACHE[uid].append(urlmatch.group())
                 pickle.dump(URLCACHE, io.open(PICKLEFILE, 'w+b'))
                 title = get_title_from_URL(urlmatch.group())
@@ -43,7 +43,12 @@ def pubmsg(connection, event):
             traceback.print_exc()
 
     if command == '!urls':
-        for url in URLCACHE[uid]:
+        dat = message.split()
+        num = 5
+        try:
+            num = int(dat[1])
+        except: pass
+        for url in URLCACHE[uid][-num:]:
             connection.privmsg(event.target(), url)
             time.sleep(0.5)
 
