@@ -24,6 +24,15 @@ hooks['pubmsg'].append(paradise)
 
 hooks['privmsg'].append(control)
 
+try:
+    import intel
+    all.append('intel')
+    hooks['pubmsg'].append(intel)
+    hooks['privmsg'].append(intel)
+except:
+    pass
+
+
 for modname in sys.modules:
     if modname[:8] != 'modules.' or not modname.split('.')[1] in all:
         continue
