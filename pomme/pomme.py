@@ -1,7 +1,5 @@
 import irclib
 
-irclib.DEBUG = True
-
 
 class Pomme(object):
     def __init__(self, configuration, modules):
@@ -69,6 +67,12 @@ class Pomme(object):
             self.reload()
         elif msg[:4] == "join":
             connection.join(msg[5:])
+
+        for x in self.mods.hooks.get('privmsg'):
+            try:
+                x.privmsg(connection, event)
+            except Exception as e:
+                print "OHGOD :psyduck,", e
 
     def handle_pubmsg(self, connection, event):
         for x in self.mods.hooks.get('pubmsg'):

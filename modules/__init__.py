@@ -7,11 +7,12 @@ import urls
 import textfun
 import traceback
 import log
+import rss
 
 import sys
 
 all = ['cookie', 'urls', 'pom', 'paradise', 'control', 'textfun', 'log',
-       'convert']
+       'convert', 'rss']
 
 hooks = {'privmsg': [], 'pubmsg': [], 'cycle': []}
 
@@ -21,8 +22,13 @@ hooks['pubmsg'].append(pom)
 hooks['pubmsg'].append(textfun)
 hooks['pubmsg'].append(log)
 hooks['pubmsg'].append(paradise)
+hooks['pubmsg'].append(rss)
 
 hooks['privmsg'].append(control)
+hooks['privmsg'].append(rss)
+hooks['privmsg'].append(log)
+
+hooks['cycle'].append(rss)
 
 try:
     import intel
