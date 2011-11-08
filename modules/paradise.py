@@ -24,5 +24,24 @@ def pubmsg(connection, event):
             traceback.print_exc()
 
     elif message.lower() in ['wat hoorden we net?']:
-        connection.privmsg(event.target(),
-                           'Kijk zelf maar: http://www.radioparadise.com/content.php?name=Playlist')
+        try:
+            doc = lxml.html.fromstring(urllib.urlopen(URL).read())
+            songs = []
+            for x in [5,7,9]:
+                node_ = doc.cssselect('tr')[x].getchildren()[1]
+                artist = song = 'n/a'
+                for node in node_.iter():
+                    artist = node.text or artist
+                    song = node.tail or song
+
+                songs.append(dict(artist=artist, song=song))
+
+            if songs:
+                for idx, song in enumerate(songs):
+                    connection.privmsg(event.target(),
+                        '%d: %s - %s' % \
+                        (idx+1,
+                         song.get('artist', 'n/a'),
+                         song.get('song', 'n/a')))
+        except:
+            traceback.print_exc()
