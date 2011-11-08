@@ -22,3 +22,7 @@ def pubmsg(connection, event):
                     (artist, song))
         except:
             traceback.print_exc()
+
+    elif message.lower() in ['wat hoorden we net?']:
+        connection.privmsg(event.target(),
+                           'Kijk zelf maar: http://www.radioparadise.com/content.php?name=Playlist')

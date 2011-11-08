@@ -52,8 +52,10 @@ def pubmsg(connection, event):
         if nickname.lower() == 'blabber':
             connection.privmsg(event.target(), "Hi %s!" % (nickname,))
 
-    #elif 'blabber' in message.lower():
-    #    connection.privmsg(event.target(), 'blabberuuu~~ <3~')
+    elif 'omgwtf' in message.lower():
+        nickname = event.source().split('!')[0]
+        if nickname.lower() == 'blabber':
+            connection.privmsg(event.target(), "blabber: shut up!")
 
     else:
         store_[msgkey] = message
