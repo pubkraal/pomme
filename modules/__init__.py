@@ -8,11 +8,12 @@ import textfun
 import traceback
 import log
 import rss
+import questions
 
 import sys
 
 all = ['cookie', 'urls', 'pom', 'paradise', 'control', 'textfun', 'log',
-       'convert', 'rss']
+       'convert', 'rss', 'questions']
 
 hooks = {'privmsg': [], 'pubmsg': [], 'cycle': []}
 
@@ -23,6 +24,7 @@ hooks['pubmsg'].append(textfun)
 hooks['pubmsg'].append(log)
 hooks['pubmsg'].append(paradise)
 hooks['pubmsg'].append(rss)
+hooks['pubmsg'].append(questions)
 
 hooks['privmsg'].append(control)
 hooks['privmsg'].append(rss)
