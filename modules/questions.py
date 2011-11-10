@@ -6,6 +6,8 @@ ANSWERS = ('Google het maar.',
            'Leuk he, dingen vragen aan botjes?',
            'Wees eerlijk, wat verwacht je nu precies?')
 
+NUMBERS = tuple(range(100) + [127, 1337])
+
 def pubmsg(connection, event):
     message = event._arguments[0].strip()
     target = event.target()
@@ -13,4 +15,8 @@ def pubmsg(connection, event):
 
     if (message.startswith("pomme, ") or message.startswith("pomme: ")) and \
         message[-1] == '?':
-        s.privmsg(target, random.choice(ANSWERS))
+        if message.split()[1] == 'hoeveel':
+            s.privmsg(target, '%s%d' % (random.choice(('ongeveer ', '')),
+                                        random.choice(NUMBERS)))
+        else:
+            s.privmsg(target, random.choice(ANSWERS))
