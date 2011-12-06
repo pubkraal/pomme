@@ -9,6 +9,7 @@ ANSWERS = ('Google het maar.',
            '42.',
            'Zoek het uit',
            'Does a pope shit in the woods?',
+           'Because fuck you, that\'s why!',
            'Dat vroeg je vrouw ook vannacht')
 
 NUMBERS = tuple(range(100) + [127, 1337])
