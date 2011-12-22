@@ -12,12 +12,12 @@ def pubmsg(connection, event):
     msgkey = ';'.join([connection.server, event.target()])
 
     if command == '!reverse':
-        if words == '_':
+        if words in ('_', ''):
             connection.privmsg(event.target(), store_[msgkey][::-1])
         else:
             connection.privmsg(event.target(), words[::-1])
     elif command == '!breezah':
-        if words == '_':
+        if words in ('_', ''):
             words = store_[msgkey]
         nwords = ''
         for idx, letter in enumerate(words):
