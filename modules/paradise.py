@@ -27,7 +27,7 @@ def pubmsg(connection, event):
         try:
             doc = lxml.html.fromstring(urllib.urlopen(URL).read())
             songs = []
-            for x in [5,7,9]:
+            for x in [5, 7, 9]:
                 node_ = doc.cssselect('tr')[x].getchildren()[1]
                 artist = song = 'n/a'
                 for node in node_.iter():
@@ -40,7 +40,7 @@ def pubmsg(connection, event):
                 for idx, song in enumerate(songs):
                     connection.privmsg(event.target(),
                         '%d: %s - %s' % \
-                        (idx+1,
+                        (idx + 1,
                          song.get('artist', 'n/a'),
                          song.get('song', 'n/a')))
         except:

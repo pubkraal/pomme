@@ -3,6 +3,7 @@ import datetime
 LAST_USED = {}
 RATE = 60
 
+
 def pubmsg(connection, event):
     global LAST_USED
     msg = event._arguments[0].strip()
@@ -17,6 +18,7 @@ def pubmsg(connection, event):
             return
 
         connection.privmsg(event.target(), "pom")
+
 
 def older_than_rate(t1, t2, rate):
     diff = t2 - t1

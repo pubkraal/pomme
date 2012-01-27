@@ -14,6 +14,7 @@ ANSWERS = ('Google het maar.',
 
 NUMBERS = tuple(range(100) + [127, 1337])
 
+
 def pubmsg(connection, event):
     message = event._arguments[0].strip()
     target = event.target()

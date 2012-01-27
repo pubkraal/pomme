@@ -48,7 +48,8 @@ def pubmsg(connection, event):
         try:
             num_ = abs(int(dat[1])) or 5
             num = min(5, num_)
-        except: pass
+        except:
+            pass
         for url in URLCACHE[uid][-num:]:
             connection.privmsg(event.target(), url)
             time.sleep(0.5)

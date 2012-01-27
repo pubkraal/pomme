@@ -3,6 +3,7 @@ import random
 
 store_ = {}
 
+
 def pubmsg(connection, event):
     global store_
     message = event._arguments[0].strip()
