@@ -26,7 +26,6 @@ def pubmsg(connection, event):
         connection.privmsg(event.target(), nwords)
 
     elif message.lower() == 'hallo pomme':
-        user = event.source().split('!')[0]
         connection.privmsg(event.target(), "Hai! <3")
 
     elif 'vakansie' in message.lower():

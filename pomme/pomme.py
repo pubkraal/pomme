@@ -21,12 +21,14 @@ class Pomme(object):
                         server.nicknames[0], ssl=server.ssl,
                         password=server.password)
 
+                print "Connection:", c
+
                 self.servers.append(s)
 
                 for channel in server.channels:
                     try:
                         s.join(channel)
-                    except:
+                    except Exception as e:
                         print e
 
             except Exception as e:
@@ -40,7 +42,6 @@ class Pomme(object):
                     x.cycle(self.servers)
                 except Exception as e:
                     print "OHGOD :psyduck:, iets fout in de cycle!"
-                    traceback.print_exc()
 
         self.close()
 

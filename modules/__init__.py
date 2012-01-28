@@ -1,4 +1,3 @@
-import cookie
 import control
 import convert
 import paradise

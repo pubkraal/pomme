@@ -1,13 +1,12 @@
 import io
 import os
 import re
-import urllib2
 import time
 import traceback
 try:
-    import cPickle as pickle
+    import cPickle as pickle    # NOQA
 except:
-    import pickle
+    import pickle # NOQA
 
 import lxml.html
 
@@ -39,7 +38,7 @@ def pubmsg(connection, event):
                 title = get_title_from_URL(urlmatch.group())
                 if title:
                     connection.privmsg(event.target(), "title: %s" % (title,))
-        except Exception as e:
+        except Exception:
             traceback.print_exc()
 
     if command == '!urls':
@@ -62,7 +61,7 @@ def get_title_from_URL(url):
     try:
         retval = doc.find('.//title').text
         retval = re.sub('\s+', ' ', retval).strip()
-    except Exception as e:
+    except Exception:
         traceback.print_exc()
 
     return retval
