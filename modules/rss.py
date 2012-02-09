@@ -96,6 +96,8 @@ def privmsg(connection, event):
 
 
 def cycle(connections):
+    global FEEDCACHE
+
     now = datetime.datetime.now()
     feeds = get_feeds_to_check(now)
     for feed in feeds:
@@ -104,6 +106,13 @@ def cycle(connections):
 
         if feed.has_new(now):
             spam(feed.items[0], FEEDCACHE[feed], connections)
+    store_feedcache()
+
+
+def store_feedcache():
+    global FEEDCACHE
+    global PICKLEFILE
+    pickle.dump(FEEDCACHE, io.open(PICKLEFILE, 'w+b'))
 
 
 def spam(feed, feeddata, connections):
@@ -140,6 +149,7 @@ def add_feed(connection, target, feed, channels):
     add_channels_to_feed([gen_uid(connection.server, channel)
                           for channel
                           in channels])
+    store_feedcache()
     connection.privmsg(target, u"added.")
 
 
