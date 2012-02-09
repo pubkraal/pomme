@@ -10,12 +10,13 @@ def pubmsg(connection, event):
 
     if msg.lower() == 'pom':
         uid = '/'.join([connection.server, event.target()])
-        if uid not in LAST_USED:
-            LAST_USED[uid] = datetime.datetime.now()
-        elif not older_than_rate(LAST_USED[uid],
+
+        # Throttling.
+        if uid in LAST_USED and not older_than_rate(LAST_USED[uid],
                                  datetime.datetime.now(),
                                  RATE):
             return
+        LAST_USED[uid] = datetime.datetime.now()
 
         connection.privmsg(event.target(), "pom")
 

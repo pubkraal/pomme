@@ -1,12 +1,15 @@
 import datetime
 import io
 import os
+import time
 from lxml import etree
 try:
     import cPickle as pickle    # NOQA
 except:
     import pickle # NOQA
 
+LAST_USED = {}
+USE_RATE = 60
 PICKLEFILE = os.path.expanduser("~/.pommerss")
 CHECK_INTERVAL = 5 * 60
 try:
@@ -45,14 +48,35 @@ class RSSFeed(object):
 
 
 def pubmsg(connection, event):
+    global LAST_USED
+    global USE_RATE
+
     message = event._arguments[0].strip()
     if message[0] != '!':
         return
     (command, remainer) = message.split(" ", 1)
 
     if command in ('!feeds', '!rss-feeds'):
-        connection.privmsg(event.target(),
-                           'Ik ken momenteel geen rss feeds, voor dit kanaal')
+        uid = '/'.join([connection.server, event.target()])
+
+        # Throttling.
+        if uid in LAST_USED and not older_than_rate(LAST_USED[uid],
+                                 datetime.datetime.now(),
+                                 RATE):
+            return
+        LAST_USED[uid] = dateime.datetime.now()
+
+        feedlist = [feed for feed, data
+                         in FEEDCACHE.iteritems()
+                         if uid in data['channels']]
+        if len(feedlist) > 0:
+            connection.privmsg(event.target(), "Lijstje!")
+            for feed in feedlist:
+                connection.privmsg(event.target(), str(feed))
+                time.sleep(1)
+        else:
+            connection.privmsg(event.target(),
+                               'Ik ken momenteel geen rss feeds, voor dit kanaal')
 
 
 def privmsg(connection, event):
@@ -89,6 +113,11 @@ def spam(feed, feeddata, connections):
 
 
 # Supporting functions
+def older_than_rate(t1, t2, rate):
+    diff = t2 - t1
+    return diff.days > 0 or diff.seconds > rate
+
+
 def get_feeds_to_check(now):
     global FEEDCACHE
     global CHECK_INTERVAL
