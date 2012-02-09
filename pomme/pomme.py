@@ -41,7 +41,7 @@ class Pomme(object):
                 try:
                     x.cycle(self.servers)
                 except Exception as e:
-                    print "OHGOD :psyduck:, iets fout in de cycle!"
+                    print "OHGOD :psyduck:, iets fout in de cycle!", e
 
         self.close()
 
@@ -73,7 +73,8 @@ class Pomme(object):
             try:
                 x.privmsg(connection, event)
             except Exception as e:
-                print "OHGOD :psyduck,", e
+                print "Exception privmsg,", e
+                print "!!", x
 
     def handle_pubmsg(self, connection, event):
         for x in self.mods.hooks.get('pubmsg'):

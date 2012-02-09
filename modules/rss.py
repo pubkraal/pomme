@@ -41,6 +41,7 @@ class RSSFeed(object):
     def update(self):
         self.items = []
 
+        print "RSS: Pulling", self.feed
         doc = etree.parse(self.feed)
         items = doc.findall('//items')
         for item in items:
@@ -86,9 +87,12 @@ def privmsg(connection, event):
     (command, remainder) = message.split(" ", 1)
 
     if command in ('!add-feed',):
-        (feed, channels) = remainder.split(1)
+        (feed, channels) = remainder.split(" ", 1)
         try:
-            add_feed(connection, event.target(), feed, channels.split())
+            add_feed(connection,
+                     nick_from_source(event.source()),
+                     feed,
+                     channels.split())
         except RSSException:
             return
         except Exception as e:
@@ -100,9 +104,10 @@ def cycle(connections):
 
     now = datetime.datetime.now()
     feeds = get_feeds_to_check(now)
+    print "Checking", feeds
     for feed in feeds:
         FEEDCACHE[feed]['lastchecked'] = now
-        feed.update()
+        # feed.update()
 
         if feed.has_new(now):
             spam(feed.items[0], FEEDCACHE[feed], connections)
@@ -135,22 +140,25 @@ def get_feeds_to_check(now):
 
     check_time = datetime.timedelta(seconds=CHECK_INTERVAL)
     for feed, data in FEEDCACHE.iteritems():
-        if data['last_checked'] + check_time < now:
+        if data['lastchecked'] + check_time < now:
             to_check.append(feed)
 
     return to_check
 
 
-def add_feed(connection, target, feed, channels):
+def add_feed(connection, source, feed, channels):
+    connection.privmsg(source, ">>" + str(channels))
+    if not channels:
+        connection.privmsg(source, "I want channels")
     if not feed in FEEDCACHE:
         if not check_feed(feed):
             raise RSSException("Not a RSS feed")
         add_feed_to_cache(feed)
     add_channels_to_feed([gen_uid(connection.server, channel)
                           for channel
-                          in channels])
+                          in channels], feed)
     store_feedcache()
-    connection.privmsg(target, u"added.")
+    connection.privmsg(source, u"added.")
 
 
 def gen_uid(server, channel):
@@ -184,3 +192,7 @@ def add_channels_to_feed(channels, feed):
         FEEDCACHE[feed]['channels'].update(channels)
     except Exception as e:
         print e
+
+
+def nick_from_source(source):
+    return source.split('!')[0]

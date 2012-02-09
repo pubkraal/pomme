@@ -25,7 +25,6 @@ hooks['pubmsg'].append(paradise)
 hooks['pubmsg'].append(rss)
 hooks['pubmsg'].append(questions)
 
-hooks['privmsg'].append(control)
 hooks['privmsg'].append(rss)
 hooks['privmsg'].append(log)
 
