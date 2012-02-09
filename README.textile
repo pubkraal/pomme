@@ -1,1 +1,3 @@
-Hoi. Dit is pomme, de IRC bot. Hij doet allerlei leuke kleine dingen, ik zal er vooral meer over schrijven wanneer de tijd daar rijp voor is.
+Hi. This is pomme, an IRC bot. It is completely extensible and it also rules. Features are added and bugs are fixed when I run into them. I basically only use this bot on two networks; one being quakenet, the other being private (no, you can't have access).
+
+It uses irclib, I included it because some OSes (freeBSD) have trouble installing it as it's hardly updated and I don't even know what the fuck. On that note, pomme does run on freeBSD, linux and mac os X. So it's multi platform. Sort of.
