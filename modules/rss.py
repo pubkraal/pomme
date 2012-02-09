@@ -62,9 +62,9 @@ def pubmsg(connection, event):
         # Throttling.
         if uid in LAST_USED and not older_than_rate(LAST_USED[uid],
                                  datetime.datetime.now(),
-                                 RATE):
+                                 USE_RATE):
             return
-        LAST_USED[uid] = dateime.datetime.now()
+        LAST_USED[uid] = datetime.datetime.now()
 
         feedlist = [feed for feed, data
                          in FEEDCACHE.iteritems()
@@ -76,7 +76,7 @@ def pubmsg(connection, event):
                 time.sleep(1)
         else:
             connection.privmsg(event.target(),
-                               'Ik ken momenteel geen rss feeds, voor dit kanaal')
+                               'Nope. Go away.')
 
 
 def privmsg(connection, event):
