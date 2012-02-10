@@ -97,9 +97,11 @@ def privmsg(connection, event):
             return
         except Exception as e:
             print "Exception during adding RSS feed:", e
-    elif command in ('!clear-cache',):
+    elif command in ('!del-feed',):
         global FEEDCACHE
-        FEEDCACHE = {}
+        if remainder in FEEDCACHE:
+            del FEEDCACHE[remainder]
+        store_feedcache()
 
 
 def cycle(connections):
