@@ -28,14 +28,18 @@ class RSSItem(object):
     def __init__(self, node):
         """ Expects an etree-node, so don't try anything else. """
         self.title = node.find("title").text
-        self.guid = node.find("guid").text
+        self.pubdate = node.find("pubDate").text
+        try:
+            self.guid = node.find("guid").text
+        except:
+            # Some feeds don't supply a uid D:
+            self.guid = self.pubdate
         try:
             self.link = node.find("link").text
         except:
             # Python.org's rdf doesn't do link tags, but uses guid for this.
             self.link = self.guid
         self.description = node.find("description").text
-        self.pubdate = node.find("pubDate").text
 
 
 class RSSFeed(object):
