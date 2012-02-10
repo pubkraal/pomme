@@ -11,7 +11,7 @@ except:
 LAST_USED = {}
 USE_RATE = 60
 PICKLEFILE = os.path.expanduser("~/.pommerss")
-CHECK_INTERVAL = 5 * 60
+CHECK_INTERVAL = 0.5 * 60
 try:
     FEEDCACHE = pickle.load(io.open(PICKLEFILE, 'r+b'))
 except:
@@ -25,12 +25,12 @@ class RSSException(Exception):
 class RSSItem(object):
     def __init__(self, node):
         """ Expects an etree-node, so don't try anything else. """
-        self.title = node.find("//title").text
-        self.link = node.find("//link").text
-        self.guid = node.find("//guid").text
-        self.link = node.find("//link").text
-        self.description = node.find("//description").text
-        self.pubdate = node.find("//pubdate").text
+        self.title = node.find("title").text
+        self.link = node.find("link").text
+        self.guid = node.find("guid").text
+        self.link = node.find("link").text
+        self.description = node.find("description").text
+        self.pubdate = node.find("pubDate").text
 
 
 class RSSFeed(object):
@@ -43,7 +43,7 @@ class RSSFeed(object):
 
         print "RSS: Pulling", self.feed
         doc = etree.parse(self.feed)
-        items = doc.findall('//items')
+        items = doc.findall('//item')
         for item in items:
             self.items.append(RSSItem(item))
 
@@ -97,6 +97,9 @@ def privmsg(connection, event):
             return
         except Exception as e:
             print "Exception during adding RSS feed:", e
+    elif command in ('!clear-cache',):
+        global FEEDCACHE
+        FEEDCACHE = {}
 
 
 def cycle(connections):
@@ -104,13 +107,20 @@ def cycle(connections):
 
     now = datetime.datetime.now()
     feeds = get_feeds_to_check(now)
-    print "Checking", feeds
+    if feeds:
+        print "Checking", feeds
     for feed in feeds:
         FEEDCACHE[feed]['lastchecked'] = now
-        # feed.update()
 
-        if feed.has_new(now):
-            spam(feed.items[0], FEEDCACHE[feed], connections)
+        feed_ = RSSFeed(feed)
+        feed_.update()
+
+        if len(feed_.items) == 0:
+            continue
+
+        if feed_.items[0].guid > FEEDCACHE[feed]['lastguid']:
+            FEEDCACHE[feed]['lastguid'] = feed_.items[0].guid
+            spam(feed_.items[0], FEEDCACHE[feed], connections)
     store_feedcache()
 
 
@@ -121,9 +131,13 @@ def store_feedcache():
 
 
 def spam(feed, feeddata, connections):
-    print feed
-    print feeddata
-    print connections
+    c_hash = dict([(c.server, c) for c in connections])
+    message = '%s - %s' % (feed.title, feed.link)
+    for channel in feeddata['channels']:
+        server, channel_name = channel.split('/', 1)
+        if server in c_hash:
+            c = c_hash[server]
+            c.privmsg(channel_name, message)
 
 
 # Supporting functions
