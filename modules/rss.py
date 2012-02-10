@@ -4,6 +4,7 @@ import os
 import time
 import traceback
 from lxml import etree
+from urlparse import urlparse, ParseResult
 try:
     import cPickle as pickle    # NOQA
 except:
@@ -143,7 +144,7 @@ def store_feedcache():
 
 def spam(feed, feeddata, connections):
     c_hash = dict([(c.server, c) for c in connections])
-    message = '%s - %s' % (feed.title, feed.link)
+    message = '%s - %s' % (feed.title, strip_utm(feed.link))
     for channel in feeddata['channels']:
         server, channel_name = channel.split('/', 1)
         if server in c_hash:
@@ -221,3 +222,17 @@ def add_channels_to_feed(channels, feed):
 
 def nick_from_source(source):
     return source.split('!')[0]
+
+
+def strip_utm(link):
+    """ This method removes utm_* query parts from a link, to make sure our
+        privacy is insured. *cough*
+    """
+    d = urlparse(link)
+    query = '&'.join([x for x in d.query.split("&") if x[:4] != 'utm_'])
+    return ParseResult(d.scheme,
+                       d.netloc,
+                       d.path,
+                       d.params,
+                       query,
+                       d.fragment).geturl()
