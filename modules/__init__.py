@@ -1,4 +1,3 @@
-import control
 import convert
 import paradise
 import pom
