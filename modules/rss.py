@@ -11,7 +11,7 @@ except:
 LAST_USED = {}
 USE_RATE = 60
 PICKLEFILE = os.path.expanduser("~/.pommerss")
-CHECK_INTERVAL = 0.5 * 60
+CHECK_INTERVAL = 5 * 60
 try:
     FEEDCACHE = pickle.load(io.open(PICKLEFILE, 'r+b'))
 except:
