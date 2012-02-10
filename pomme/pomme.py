@@ -1,4 +1,5 @@
 import irclib
+import traceback
 
 
 class Pomme(object):
@@ -41,7 +42,8 @@ class Pomme(object):
                 try:
                     x.cycle(self.servers)
                 except Exception as e:
-                    print "OHGOD :psyduck:, iets fout in de cycle!", e
+                    print "Exception cycle:", e
+                    traceback.print_exc()
 
         self.close()
 

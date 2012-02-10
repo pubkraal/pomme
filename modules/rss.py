@@ -2,6 +2,7 @@ import datetime
 import io
 import os
 import time
+import traceback
 from lxml import etree
 try:
     import cPickle as pickle    # NOQA
@@ -112,17 +113,21 @@ def cycle(connections):
     if feeds:
         print "Checking", feeds
     for feed in feeds:
-        FEEDCACHE[feed]['lastchecked'] = now
+        try:
+            FEEDCACHE[feed]['lastchecked'] = now
 
-        feed_ = RSSFeed(feed)
-        feed_.update()
+            feed_ = RSSFeed(feed)
+            feed_.update()
 
-        if len(feed_.items) == 0:
-            continue
+            if len(feed_.items) == 0:
+                continue
 
-        if feed_.items[0].guid > FEEDCACHE[feed]['lastguid']:
-            FEEDCACHE[feed]['lastguid'] = feed_.items[0].guid
-            spam(feed_.items[0], FEEDCACHE[feed], connections)
+            if feed_.items[0].guid > FEEDCACHE[feed]['lastguid']:
+                FEEDCACHE[feed]['lastguid'] = feed_.items[0].guid
+                spam(feed_.items[0], FEEDCACHE[feed], connections)
+        except:
+            print "Failed updating", feed
+            traceback.print_exc()
     store_feedcache()
 
 
