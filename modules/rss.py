@@ -28,7 +28,6 @@ class RSSItem(object):
     def __init__(self, node):
         """ Expects an etree-node, so don't try anything else. """
         self.title = node.find("title").text
-        self.link = node.find("link").text
         self.guid = node.find("guid").text
         try:
             self.link = node.find("link").text
