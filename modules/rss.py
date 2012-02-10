@@ -29,7 +29,11 @@ class RSSItem(object):
         self.title = node.find("title").text
         self.link = node.find("link").text
         self.guid = node.find("guid").text
-        self.link = node.find("link").text
+        try:
+            self.link = node.find("link").text
+        except:
+            # Python.org's rdf doesn't do link tags, but uses guid for this.
+            self.link = self.guid
         self.description = node.find("description").text
         self.pubdate = node.find("pubDate").text
 
