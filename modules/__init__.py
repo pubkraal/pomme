@@ -11,7 +11,7 @@ import questions
 import sys
 
 all = ['cookie', 'urls', 'pom', 'paradise', 'control', 'textfun', 'log',
-       'convert', 'rss', 'questions']
+       'convert', 'rss', 'questions', 'colt']
 
 hooks = {'privmsg': [], 'pubmsg': [], 'cycle': []}
 
@@ -23,6 +23,7 @@ hooks['pubmsg'].append(log)
 hooks['pubmsg'].append(paradise)
 hooks['pubmsg'].append(rss)
 hooks['pubmsg'].append(questions)
+hooks['pubmsg'].append(dolphin)
 
 hooks['privmsg'].append(rss)
 hooks['privmsg'].append(log)
