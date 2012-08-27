@@ -4,7 +4,7 @@ import modules
 from pomme import pomme, config
 
 
-def main():
+def je_suis_une_pomme():
     parser = argparse.ArgumentParser(description='pomme irc bot')
     parser.add_argument('-c', '--config', dest="extraconfig", default="",
         help="Supply an extra configuration file for parsing options from.")
@@ -24,4 +24,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    je_suis_une_pomme()
