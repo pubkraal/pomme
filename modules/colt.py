@@ -1,7 +1,8 @@
 # colt = co&lt; = co<.
 # ...
 # it's a dolphin
-CURRENT=None
+CURRENT = None
+
 
 def pubmsg(connection, event):
     username = event.source().split('!')[0]
