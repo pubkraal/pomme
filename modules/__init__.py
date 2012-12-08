@@ -1,3 +1,4 @@
+import butt
 import convert
 import paradise
 import pom
@@ -10,11 +11,12 @@ import questions
 
 import sys
 
-all = ['cookie', 'urls', 'pom', 'paradise', 'control', 'textfun', 'log',
-       'convert', 'rss', 'questions']
+all = ['butt', 'cookie', 'urls', 'pom', 'paradise', 'control', 'textfun',
+       'log', 'convert', 'rss', 'questions']
 
 hooks = {'privmsg': [], 'pubmsg': [], 'cycle': []}
 
+hooks['pubmsg'].append(butt)
 hooks['pubmsg'].append(convert)
 hooks['pubmsg'].append(urls)
 hooks['pubmsg'].append(pom)

@@ -31,10 +31,8 @@ class Pomme(object):
                         s.join(channel)
                     except Exception as e:
                         print e
-
-            except Exception as e:
-                print e
-                raise e
+            except:
+                raise
 
         while not self.terminate:
             self.irc.process_once(0.2)
