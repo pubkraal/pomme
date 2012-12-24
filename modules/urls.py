@@ -3,16 +3,13 @@ import os
 import re
 import time
 import traceback
-try:
-    import cPickle as pickle    # NOQA
-except:
-    import pickle # NOQA
+import json
 
 import lxml.html
 
-PICKLEFILE = os.path.expanduser("~/.pommeurls")
+URLFILE = os.path.expanduser("~/.pommeurls")
 try:
-    URLCACHE = pickle.load(io.open(PICKLEFILE, 'r+b'))
+    URLCACHE = json.load(io.open(URLFILE, 'r+b'))
 except:
     URLCACHE = {}
 
@@ -34,7 +31,7 @@ def pubmsg(connection, event):
             if urlmatch.group() not in URLCACHE:
                 URLCACHE[uid] = URLCACHE[uid][-50:]
                 URLCACHE[uid].append(urlmatch.group())
-                pickle.dump(URLCACHE, io.open(PICKLEFILE, 'w+b'))
+                json.dump(URLCACHE, io.open(URLFILE, 'w+b'))
                 title = get_title_from_URL(urlmatch.group())
                 if title:
                     connection.privmsg(event.target(), "title: %s" % (title,))
