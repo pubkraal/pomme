@@ -62,9 +62,7 @@ class Pomme(object):
 
     def handle_privmsg(self, connection, event):
         msg = event._arguments[0].lower()
-        if msg == "vertrek, nu":
-            self.terminate = True
-        elif msg == "rehash":
+        if msg == "rehash":
             self.reload()
         elif msg[:4] == "join":
             connection.join(msg[5:])
