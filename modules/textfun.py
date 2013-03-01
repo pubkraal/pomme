@@ -14,7 +14,7 @@ def pubmsg(connection, event):
     handler = None
 
     if command == '!reverse':
-        handler = reverse
+        handler = kevin
     elif command == '!breezah':
         handler = breezah
     elif 'vakansie' in message.lower():
@@ -30,7 +30,7 @@ def pubmsg(connection, event):
         handler(connection, event, message, command, words, msgkey)
 
 
-def reverse(connection, event, message, command, words, msgkey):
+def kevin(connection, event, message, command, words, msgkey):
     if words in ('_', ''):
         connection.privmsg(event.target(), store_[msgkey][::-1])
     else:
